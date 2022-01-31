@@ -2,10 +2,11 @@ from machine import Pin
 import math
 import struct
 from atm90e32_reg import atm90e32_reg
+import utime
 
 class atm90e32_ctl:
 
-	def __init__(self, linefreq, pgagain, ugain, igainA, igainB, igainC, csPin, spiLink):
+	def __init__(self, linefreq, pgagain, ugain, igainA, igainB, igainC, csPin, spiLink, initDelay=True):
 		self._linefreq = linefreq
 		self._pgagain = pgagain
 		self._ugain = ugain
@@ -21,6 +22,9 @@ class atm90e32_ctl:
 		self._csPin.on()
 
 		self._init_config()
+		
+		if initDelay: # Chip requires a bit less than 200mS after init for readings to stabilize
+			utime.sleep_ms(200)
 
 	def _init_config(self):
 		if (self._linefreq == 4231): # North America power frequency

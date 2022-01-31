@@ -1,5 +1,5 @@
 from machine import Pin, SPI
-import time
+import utime
 import struct
 
 # atm90e32 Datasheet: http://ww1.microchip.com/downloads/en/devicedoc/Atmel-46003-SE-M90E32AS-Datasheet.pdf
@@ -28,10 +28,10 @@ class atm90e32_spi:
 		address |= rw << 15 # Set RW bit flag
 
 		csPin.off() # Enable the chip select
-		time.sleep_us(10)
+		utime.sleep_us(10)
 
 		self.spi.write(struct.pack('>H', address)) # Send the address
-		# time.sleep_us(4) # This was in original code, not immediately seeing a requirement in the datasheet, and we're not running SPI very quickly.
+		# utime.sleep_us(4) # This was in original code, not immediately seeing a requirement in the datasheet, and we're not running SPI very quickly.
 
 		if (rw == self.SPI_READ):
 			result = struct.unpack('>H', self.spi.read(2))[0]
