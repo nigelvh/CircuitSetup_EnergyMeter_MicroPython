@@ -173,6 +173,21 @@ class atm90e32_ctl:
 		return reading / 100.0
 	#####################################################################################
 	@property
-	def active_power(self):
+	def active_power_total(self):
 		reading = self._spiLink.readLongRegister(self._csPin, self._registers.PmeanT, self._registers.PmeanTLSB)
 		return reading * 0.00032
+	#####################################################################################
+	@property
+	def reactive_power_total(self):
+		reading = self._spiLink.readLongRegister(self._csPin, self._registers.QmeanT, self._registers.QmeanTLSB)
+		return reading * 0.00032
+	#####################################################################################
+	@property
+	def apparent_power_total(self):
+		reading = self._spiLink.readLongRegister(self._csPin, self._registers.SAmeanT, self._registers.SAmeanTLSB)
+		return reading * 0.00032
+	#####################################################################################
+	@property
+	def power_factor_total(self):
+		reading = self._spiLink.readRegister2C(self._csPin, self._registers.PFmeanT)
+		return reading * 0.001

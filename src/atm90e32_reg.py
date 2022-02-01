@@ -145,7 +145,7 @@ class atm90e32_reg:
 		self.QmeanA = 0xB5   # A Mean Power (Q)
 		self.QmeanB = 0xB6   # B Mean Power (Q)
 		self.QmeanC = 0xB7   # C Mean Power (Q)
-		self.SmeanT = 0xB8   # Total Mean Power (S)
+		self.SAmeanT = 0xB8   # Total Mean Power (S)
 		self.SmeanA = 0xB9   # A Mean Power (S)
 		self.SmeanB = 0xBA   # B Mean Power (S)
 		self.SmeanC = 0xBB   # C Mean Power (S)

@@ -47,6 +47,12 @@ class atm90e32_spi:
 	# Read a 16bit register
 	def readRegister(self, csPin, address):
 		return self._spi_raw(csPin, self.SPI_READ, address, 0xFFFF)
+		
+	#####################################################################################
+	# Read a 16bit register, Two's Complement Format
+	def readRegister2C(self, csPin, address):
+		value = self._spi_raw(csPin, self.SPI_READ, address, 0xFFFF)
+		return value - int((value << 1) & 2**16)
 
 	#####################################################################################
 	# Write a 16bit register
@@ -54,10 +60,9 @@ class atm90e32_spi:
 		return self._spi_raw(csPin, self.SPI_WRITE, address, value)
 
 	#####################################################################################
-	# Read a 32bit register
+	# Read a 32bit register, Two's Complement Format
 	def readLongRegister(self, csPin, address_high, address_low):
 		value_h = self._spi_raw(csPin, self.SPI_READ, address_high, 0xFFFF)
 		value_l = self._spi_raw(csPin, self.SPI_READ, address_low, 0xFFFF)
 		value = (value_h << 16) | value_l
-		value = value ^ 0xffffffff
-		return value
+		return value - int((value << 1) & 2**32)
