@@ -61,7 +61,7 @@ class atm90e32_spi:
 
 	#####################################################################################
 	# Read a 32bit register, Two's Complement Format
-	def readLongRegister(self, csPin, address_high, address_low):
+	def readLongRegister2C(self, csPin, address_high, address_low):
 		value_h = self._spi_raw(csPin, self.SPI_READ, address_high, 0xFFFF)
 		value_l = self._spi_raw(csPin, self.SPI_READ, address_low, 0xFFFF)
 		value = (value_h << 16) | value_l

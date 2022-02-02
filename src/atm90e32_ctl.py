@@ -93,13 +93,13 @@ class atm90e32_ctl:
 		self._spiLink.writeRegister(self._csPin, self._registers.IgainA, self._igainA)	# A line current gain
 		self._spiLink.writeRegister(self._csPin, self._registers.UoffsetA, 0x0000)		# A Voltage offset
 		self._spiLink.writeRegister(self._csPin, self._registers.IoffsetA, 0x0000)		# A line current offset
+		
 		self._spiLink.writeRegister(self._csPin, self._registers.UgainB, self._ugain)	# B Voltage rms gain
-        
 		self._spiLink.writeRegister(self._csPin, self._registers.IgainB, self._igainB)	# B line current gain
 		self._spiLink.writeRegister(self._csPin, self._registers.UoffsetB, 0x0000)		# B Voltage offset
 		self._spiLink.writeRegister(self._csPin, self._registers.IoffsetB, 0x0000)		# B line current offset
+		
 		self._spiLink.writeRegister(self._csPin, self._registers.UgainC, self._ugain)	# C Voltage rms gain
-        
 		self._spiLink.writeRegister(self._csPin, self._registers.IgainC, self._igainC)	# C line current gain
 		self._spiLink.writeRegister(self._csPin, self._registers.UoffsetC, 0x0000)		# C Voltage offset
 		self._spiLink.writeRegister(self._csPin, self._registers.IoffsetC, 0x0000)		# C line current offset
@@ -136,6 +136,8 @@ class atm90e32_ctl:
 	def meter_status1(self):
 		reading = self._spiLink.readRegister(self._csPin, self._registers.EMMState1)
 		return reading
+
+
 	#####################################################################################
 	@property
 	def line_voltageA(self):
@@ -151,6 +153,30 @@ class atm90e32_ctl:
 	def line_voltageC(self):
 		reading = self._spiLink.readRegister(self._csPin, self._registers.UrmsC)
 		return reading / 100.0
+
+
+	#####################################################################################
+	@property
+	def peak_voltageA(self):
+		reading = self._spiLink.readRegister(self._csPin, self._registers.UPeakA)
+		return reading * (self._ugain / 819200.0) # UPeak = UPeakRegValue x (Ugain / (100 x 2^13))
+	#####################################################################################
+	@property
+	def peak_voltageB(self):
+		reading = self._spiLink.readRegister(self._csPin, self._registers.UPeakB)
+		return reading * (self._ugain / 819200.0) # UPeak = UPeakRegValue x (Ugain / (100 x 2^13))
+	#####################################################################################
+	@property
+	def peak_voltageC(self):
+		reading = self._spiLink.readRegister(self._csPin, self._registers.UPeakC)
+		return reading * (self._ugain / 819200.0) # UPeak = UPeakRegValue x (Ugain / (100 x 2^13))
+
+
+	#####################################################################################
+	@property
+	def line_current_total(self):
+		reading = self._spiLink.readRegister(self._csPin, self._registers.IrmsN)
+		return reading / 1000.0
 	#####################################################################################
 	@property
 	def line_currentA(self):
@@ -166,28 +192,115 @@ class atm90e32_ctl:
 	def line_currentC(self):
 		reading = self._spiLink.readRegister(self._csPin, self._registers.IrmsC)
 		return reading / 1000.0
+
+
+	#####################################################################################
+	@property
+	def peak_currentA(self):
+		reading = self._spiLink.readRegister(self._csPin, self._registers.IPeakA)
+		return reading * (self._ugain / 8192000.0) # UPeak = UPeakRegValue x (Ugain / (100 x 2^13))
+	#####################################################################################
+	@property
+	def peak_currentB(self):
+		reading = self._spiLink.readRegister(self._csPin, self._registers.IPeakB)
+		return reading * (self._ugain / 8192000.0) # UPeak = UPeakRegValue x (Ugain / (100 x 2^13))
+	#####################################################################################
+	@property
+	def peak_currentC(self):
+		reading = self._spiLink.readRegister(self._csPin, self._registers.IPeakC)
+		return reading * (self._ugain / 8192000.0) # UPeak = UPeakRegValue x (Ugain / (100 x 2^13))
+
+
 	#####################################################################################
 	@property
 	def frequency(self):
 		reading = self._spiLink.readRegister(self._csPin, self._registers.Freq)
 		return reading / 100.0
+
+
 	#####################################################################################
 	@property
 	def active_power_total(self):
-		reading = self._spiLink.readLongRegister(self._csPin, self._registers.PmeanT, self._registers.PmeanTLSB)
+		reading = self._spiLink.readLongRegister2C(self._csPin, self._registers.PmeanT, self._registers.PmeanTLSB)
 		return reading * 0.00032
+	#####################################################################################
+	@property
+	def active_powerA(self):
+		reading = self._spiLink.readLongRegister2C(self._csPin, self._registers.PmeanA, self._registers.PmeanALSB)
+		return reading * 0.00032
+	#####################################################################################
+	@property
+	def active_powerB(self):
+		reading = self._spiLink.readLongRegister2C(self._csPin, self._registers.PmeanB, self._registers.PmeanBLSB)
+		return reading * 0.00032
+	#####################################################################################
+	@property
+	def active_powerC(self):
+		reading = self._spiLink.readLongRegister2C(self._csPin, self._registers.PmeanC, self._registers.PmeanCLSB)
+		return reading * 0.00032
+	
+	
 	#####################################################################################
 	@property
 	def reactive_power_total(self):
-		reading = self._spiLink.readLongRegister(self._csPin, self._registers.QmeanT, self._registers.QmeanTLSB)
+		reading = self._spiLink.readLongRegister2C(self._csPin, self._registers.QmeanT, self._registers.QmeanTLSB)
 		return reading * 0.00032
 	#####################################################################################
 	@property
-	def apparent_power_total(self):
-		reading = self._spiLink.readLongRegister(self._csPin, self._registers.SAmeanT, self._registers.SAmeanTLSB)
+	def reactive_powerA(self):
+		reading = self._spiLink.readLongRegister2C(self._csPin, self._registers.QmeanA, self._registers.QmeanALSB)
 		return reading * 0.00032
+	#####################################################################################
+	@property
+	def reactive_powerB(self):
+		reading = self._spiLink.readLongRegister2C(self._csPin, self._registers.QmeanB, self._registers.QmeanBLSB)
+		return reading * 0.00032
+	#####################################################################################
+	@property
+	def reactive_powerC(self):
+		reading = self._spiLink.readLongRegister2C(self._csPin, self._registers.QmeanC, self._registers.QmeanCLSB)
+		return reading * 0.00032
+
+
+	#####################################################################################
+	@property
+	def apparent_power_total(self):
+		reading = self._spiLink.readLongRegister2C(self._csPin, self._registers.SAmeanT, self._registers.SAmeanTLSB)
+		return reading * 0.00032
+	#####################################################################################
+	@property
+	def apparent_powerA(self):
+		reading = self._spiLink.readLongRegister2C(self._csPin, self._registers.SmeanA, self._registers.SmeanALSB)
+		return reading * 0.00032
+	#####################################################################################
+	@property
+	def apparent_powerB(self):
+		reading = self._spiLink.readLongRegister2C(self._csPin, self._registers.SmeanB, self._registers.SmeanBLSB)
+		return reading * 0.00032
+	#####################################################################################
+	@property
+	def apparent_powerC(self):
+		reading = self._spiLink.readLongRegister2C(self._csPin, self._registers.SmeanC, self._registers.SmeanCLSB)
+		return reading * 0.00032
+
+
 	#####################################################################################
 	@property
 	def power_factor_total(self):
 		reading = self._spiLink.readRegister2C(self._csPin, self._registers.PFmeanT)
+		return reading * 0.001
+	#####################################################################################
+	@property
+	def power_factorA(self):
+		reading = self._spiLink.readRegister2C(self._csPin, self._registers.PFmeanA)
+		return reading * 0.001
+	#####################################################################################
+	@property
+	def power_factorB(self):
+		reading = self._spiLink.readRegister2C(self._csPin, self._registers.PFmeanB)
+		return reading * 0.001
+	#####################################################################################
+	@property
+	def power_factorC(self):
+		reading = self._spiLink.readRegister2C(self._csPin, self._registers.PFmeanC)
 		return reading * 0.001

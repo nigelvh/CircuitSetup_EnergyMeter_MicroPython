@@ -201,14 +201,14 @@ class atm90e32_reg:
 		self.IrmsBLSB = 0xEE  # Lower Word (B RMS Current)
 		self.IrmsCLSB = 0xEF  # Lower Word (C RMS Current)
 
-		#* THD, FREQUENCY, ANGLE & TEMPTEMP REGISTERS*#
-		self.THDNUA = 0xF1   # A Voltage THD+N
-		self.THDNUB = 0xF2   # B Voltage THD+N
-		self.THDNUC = 0xF3   # C Voltage THD+N
+		#* PEAK, FREQUENCY, ANGLE & TEMPTEMP REGISTERS*#
+		self.UPeakA = 0xF1   # A Voltage Peak
+		self.UPeakB = 0xF2   # B Voltage Peak
+		self.UPeakC = 0xF3   # C Voltage Peak
 		# 0xF4	    ## Reserved Register
-		self.THDNIA = 0xF5   # A Current THD+N
-		self.THDNIB = 0xF6   # B Current THD+N
-		self.THDNIC = 0xF7   # C Current THD+N
+		self.IPeakA = 0xF5   # A Current Peak
+		self.IPeakB = 0xF6   # B Current Peak
+		self.IPeakC = 0xF7   # C Current Peak
 		self.Freq = 0xF8    # Frequency
 		self.PAngleA = 0xF9   # A Mean Phase Angle
 		self.PAngleB = 0xFA   # B Mean Phase Angle
