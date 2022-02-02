@@ -182,7 +182,7 @@ class atm90e32_reg:
 		self.IrmsA = 0xDD    # A RMS Current
 		self.IrmsB = 0xDE    # B RMS Current
 		self.IrmsC = 0xDF    # C RMS Current
-		self.IrmsN = 0xD8    # Calculated N RMS Current
+		self.IrmsN = 0xDC    # Calculated N RMS Current
 
 		self.PmeanTFLSB = 0xE0  # Lower Word (Tot. Act. Fund. Power)
 		self.PmeanAFLSB = 0xE1  # Lower Word (A Act. Fund. Power)
