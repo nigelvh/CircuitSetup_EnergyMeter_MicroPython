@@ -158,17 +158,17 @@ class atm90e32_ctl:
 	#####################################################################################
 	@property
 	def peak_voltageA(self):
-		reading = self._spiLink.readRegister(self._csPin, self._registers.UPeakA)
+		reading = self._spiLink.readRegister2C(self._csPin, self._registers.UPeakA)
 		return reading * (self._ugain / 819200.0) # UPeak = UPeakRegValue x (Ugain / (100 x 2^13))
 	#####################################################################################
 	@property
 	def peak_voltageB(self):
-		reading = self._spiLink.readRegister(self._csPin, self._registers.UPeakB)
+		reading = self._spiLink.readRegister2C(self._csPin, self._registers.UPeakB)
 		return reading * (self._ugain / 819200.0) # UPeak = UPeakRegValue x (Ugain / (100 x 2^13))
 	#####################################################################################
 	@property
 	def peak_voltageC(self):
-		reading = self._spiLink.readRegister(self._csPin, self._registers.UPeakC)
+		reading = self._spiLink.readRegister2C(self._csPin, self._registers.UPeakC)
 		return reading * (self._ugain / 819200.0) # UPeak = UPeakRegValue x (Ugain / (100 x 2^13))
 
 
@@ -197,17 +197,17 @@ class atm90e32_ctl:
 	#####################################################################################
 	@property
 	def peak_currentA(self):
-		reading = self._spiLink.readRegister(self._csPin, self._registers.IPeakA)
+		reading = self._spiLink.readRegister2C(self._csPin, self._registers.IPeakA)
 		return reading * (self._ugain / 8192000.0) # UPeak = UPeakRegValue x (Ugain / (100 x 2^13))
 	#####################################################################################
 	@property
 	def peak_currentB(self):
-		reading = self._spiLink.readRegister(self._csPin, self._registers.IPeakB)
+		reading = self._spiLink.readRegister2C(self._csPin, self._registers.IPeakB)
 		return reading * (self._ugain / 8192000.0) # UPeak = UPeakRegValue x (Ugain / (100 x 2^13))
 	#####################################################################################
 	@property
 	def peak_currentC(self):
-		reading = self._spiLink.readRegister(self._csPin, self._registers.IPeakC)
+		reading = self._spiLink.readRegister2C(self._csPin, self._registers.IPeakC)
 		return reading * (self._ugain / 8192000.0) # UPeak = UPeakRegValue x (Ugain / (100 x 2^13))
 
 
