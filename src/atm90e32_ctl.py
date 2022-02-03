@@ -198,17 +198,17 @@ class atm90e32_ctl:
 	@property
 	def peak_currentA(self):
 		reading = self._spiLink.readRegister2C(self._csPin, self._registers.IPeakA)
-		return reading * (self._ugain / 8192000.0) # UPeak = UPeakRegValue x (Ugain / (100 x 2^13))
+		return reading * (self._igainA / 8192000.0) # IPeak = IPeakRegValue x (Igain / (1000 x 2^13))
 	#####################################################################################
 	@property
 	def peak_currentB(self):
 		reading = self._spiLink.readRegister2C(self._csPin, self._registers.IPeakB)
-		return reading * (self._ugain / 8192000.0) # UPeak = UPeakRegValue x (Ugain / (100 x 2^13))
+		return reading * (self._igainB / 8192000.0) # IPeak = IPeakRegValue x (Igain / (1000 x 2^13))
 	#####################################################################################
 	@property
 	def peak_currentC(self):
 		reading = self._spiLink.readRegister2C(self._csPin, self._registers.IPeakC)
-		return reading * (self._ugain / 8192000.0) # UPeak = UPeakRegValue x (Ugain / (100 x 2^13))
+		return reading * (self._igainC / 8192000.0) # IPeak = IPeakRegValue x (Igain / (1000 x 2^13))
 
 
 	#####################################################################################
