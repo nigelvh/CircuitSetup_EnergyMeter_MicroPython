@@ -58,4 +58,27 @@ class cs_energy_meter:
 		sensorNumB = sensorNumA + 1
 		
 		return [self.sensor[sensorNumA].power_factorA, self.sensor[sensorNumA].power_factorB, self.sensor[sensorNumA].power_factorC, self.sensor[sensorNumB].power_factorA, self.sensor[sensorNumB].power_factorB, self.sensor[sensorNumB].power_factorC]
+
+	def get_power_active(self, boardNum):
+		if boardNum < 1 or boardNum > 7: raise ValueError("boardNum must be between 1 to 7 inclusive.")
+
+		sensorNumA = (boardNum - 1) * 2
+		sensorNumB = sensorNumA + 1
 		
+		return [self.sensor[sensorNumA].active_powerA, self.sensor[sensorNumA].active_powerB, self.sensor[sensorNumA].active_powerC, self.sensor[sensorNumB].active_powerA, self.sensor[sensorNumB].active_powerB, self.sensor[sensorNumB].active_powerC]
+
+	def get_power_reactive(self, boardNum):
+		if boardNum < 1 or boardNum > 7: raise ValueError("boardNum must be between 1 to 7 inclusive.")
+
+		sensorNumA = (boardNum - 1) * 2
+		sensorNumB = sensorNumA + 1
+		
+		return [self.sensor[sensorNumA].reactive_powerA, self.sensor[sensorNumA].reactive_powerB, self.sensor[sensorNumA].reactive_powerC, self.sensor[sensorNumB].reactive_powerA, self.sensor[sensorNumB].reactive_powerB, self.sensor[sensorNumB].reactive_powerC]
+
+	def get_power_apparent(self, boardNum):
+		if boardNum < 1 or boardNum > 7: raise ValueError("boardNum must be between 1 to 7 inclusive.")
+
+		sensorNumA = (boardNum - 1) * 2
+		sensorNumB = sensorNumA + 1
+		
+		return [self.sensor[sensorNumA].apparent_powerA, self.sensor[sensorNumA].apparent_powerB, self.sensor[sensorNumA].apparent_powerC, self.sensor[sensorNumB].apparent_powerA, self.sensor[sensorNumB].apparent_powerB, self.sensor[sensorNumB].apparent_powerC]
